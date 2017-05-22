@@ -6,13 +6,11 @@
 module Lattice where
 
 -- Two point lattice
-data Lattice = H | L | X deriving (Show, Eq)
+data Lattice = H | L deriving (Show, Eq)
 
 type family l <= h where
-  l <= l = True -- This seems redundant, but we need it to make GHC
-                -- okay with the Monad instance for `T` in DCC
-  L <= l = True
-  l <= H = True
+  H <= L = False
+  _ <= _ = True
 
 leq :: Lattice -> Lattice -> Bool
 L `leq` _ = True
