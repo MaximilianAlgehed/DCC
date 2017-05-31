@@ -42,7 +42,7 @@ instance Project L where
 
 fill' p = merge (p, mempty) mempty
 
-fill p = merge p mempty
+fill p  = merge p mempty
 
 teller
   :: (Project l,
