@@ -64,6 +64,6 @@ instance MonadT (T l) l where
 instance (MonadT inner l, Monad inner, MonadTrans mt) => MonadT (mt inner) l where
   liftT = lift . liftT
 
--- Example from the "Translating Dependency into Parametricity" paper
-example :: T L Bool -> T H Bool
-example t = t >>>= return
+instance Monoid m => Monoid (T l m) where
+  mempty   = return mempty
+  mappend  = liftM2 mappend

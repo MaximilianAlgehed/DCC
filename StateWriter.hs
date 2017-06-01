@@ -1,27 +1,19 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE DataKinds #-}
-{-# LANGUAGE ExplicitForAll #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE FunctionalDependencies #-}
-{-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
 import Lattice
 import DCC
 import Control.Monad.Writer
 import Control.Monad.State
 
-type LL = L
-type HH = H
-
 instance Monoid m => Monoid (T l m) where
   mempty   = return mempty
   mappend  = liftM2 mappend
 
 type DBEntry = String
-type Outputs e =  (T LL e, T HH e)
+type Outputs e =  (T L e, T H e)
 
 type Entries  = Outputs [DBEntry]
 
