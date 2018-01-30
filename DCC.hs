@@ -9,17 +9,12 @@ module DCC where
 
 import Control.Monad
 import Control.Monad.Trans
+import Data.Type.Bool
 
 import Lattice
 
 -- The `T` monad family from the DCC paper
 newtype T (l :: Lattice) a = T { unT :: a }
-
--- Conjunction
-type family x && y where
-  True  && True  = True
-  False && b     = False
-  b     && False = False
 
 {- Notion of protected at -}
 type family ProtectedAt (t :: *) (l :: Lattice) where
