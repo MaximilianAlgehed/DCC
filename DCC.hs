@@ -4,6 +4,7 @@
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE UndecidableInstances  #-}
+{-# LANGUAGE CPP #-}
 
 module DCC where
 
@@ -12,6 +13,10 @@ import Control.Monad.Trans
 import Data.Type.Bool
 
 import Lattice
+
+# if !MIN_VERSION_base(4,11,0)
+import Data.Semigroup ( Semigroup, (<>) )
+#endif
 
 -- The `T` monad family from the DCC paper
 newtype T (l :: Lattice) a = T { unT :: a }
@@ -59,6 +64,11 @@ instance MonadT (T l) l where
 instance (MonadT inner l, Monad inner, MonadTrans mt) => MonadT (mt inner) l where
   liftT = lift . liftT
 
+instance Semigroup m => Semigroup (T l m) where
+  (<>) = liftM2 (<>)
+
 instance Monoid m => Monoid (T l m) where
-  mempty   = return mempty
-  mappend  = liftM2 mappend
+  mempty = return mempty
+# if !MIN_VERSION_base(4,11,0)
+  mappend = liftM2 mappend
+# endif
