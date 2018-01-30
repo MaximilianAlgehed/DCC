@@ -8,10 +8,6 @@ import DCC
 import Control.Monad.Writer
 import Control.Monad.State
 
-instance Monoid m => Monoid (T l m) where
-  mempty   = return mempty
-  mappend  = liftM2 mappend
-
 type DBEntry = String
 type Outputs e =  (T L e, T H e)
 
